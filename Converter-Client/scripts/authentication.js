@@ -1,4 +1,6 @@
-const url = 'https://deciding-logically-piglet.ngrok-free.app/sessions/auth';
+const url = window.location.hostname === 'localhost'
+    ? 'http://localhost:8080/sessions/auth'
+    : 'http://api:8080/sessions/auth';
 
 document.getElementById('auth-form').addEventListener('submit', async function (event) {
     event.preventDefault();

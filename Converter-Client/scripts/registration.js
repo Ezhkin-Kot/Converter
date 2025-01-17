@@ -1,4 +1,6 @@
-const url = 'https://deciding-logically-piglet.ngrok-free.app';
+const url = window.location.hostname === 'localhost'
+    ? 'http://localhost:8080'
+    : 'http://api:8080';
 
 document.getElementById('reg-form').addEventListener('submit', async function (event) {
     event.preventDefault();

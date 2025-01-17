@@ -6,11 +6,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "AllowAll", policy =>
+    options.AddPolicy(name: "AllowSpecificOrigins", policy =>
     {
-        policy.AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        policy.WithOrigins(
+            "http://localhost",
+            "https://localhost:80",
+            "http://client"
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader();
     });
 });
 
@@ -42,5 +46,5 @@ app.MapPut("/sessions/close/{userid:int}", (int userid) => SessionDb.CloseSessio
 app.MapPut("/sessions/upd/{userid:int}", (int userid) => SessionDb.UpdAmount(userid));
 app.MapDelete("/sessions/{userid:int}", (int userid) => SessionDb.DeleteSession(userid));
 
-app.UseCors("AllowAll");
+app.UseCors("AllowSpecificOrigins");
 app.Run();

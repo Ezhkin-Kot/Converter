@@ -1197,11 +1197,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/ConverterAPI.csproj",
+      "projectUniqueName": "/Users/ezhkinkot/Projects/WEB/Converter/Converter-Server/ConverterAPI/ConverterAPI.csproj",
       "projectName": "ConverterAPI",
-      "projectPath": "/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/ConverterAPI.csproj",
+      "projectPath": "/Users/ezhkinkot/Projects/WEB/Converter/Converter-Server/ConverterAPI/ConverterAPI.csproj",
       "packagesPath": "/Users/ezhkinkot/.nuget/packages/",
-      "outputPath": "/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/obj/",
+      "outputPath": "/Users/ezhkinkot/Projects/WEB/Converter/Converter-Server/ConverterAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/ezhkinkot/.nuget/NuGet/NuGet.Config"

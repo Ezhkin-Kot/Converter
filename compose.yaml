@@ -3,7 +3,7 @@
 
 services:
   nginx:
-    image: nginx:stable-alpine
+    image: nginx:alpine
     ports:
       - "80:80"
     volumes:
@@ -26,7 +26,6 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
     build:
       context: ./Converter-Server/ConverterAPI
-      dockerfile: ./Converter-Server/ConverterAPI/Dockerfile
     ports:
       - "8080:8080"
     container_name: converter_api
