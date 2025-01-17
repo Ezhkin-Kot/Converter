@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration</title>
+
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/reg-auth-style.css" />
+</head>
+<body>
+    <section class="reg-auth" id="registration">
+        <div class="reg-auth-card">
+            <h1>Registration</h1>
+
+            <form name="reg-form" id="reg-form">
+                <input type="text" name="login" id="login" placeholder="Login" maxlength="40" minlength="3" required />
+                <input type="password" name="password" id="password" placeholder="Password" maxlength="40" minlength="8" required />
+                <input type="password" name="confirm" id="pass-confirm" placeholder="Confirm password" maxlength="40" minlength="8" required />
+
+                <button class="btn-send" type="submit">Register</button>
+                <span>Already have an account?</span>
+                <a href="authentication.html">Log in</a>
+                <div class="messages">
+                    <span class="message" id="user-exists-message">User already exists</span>
+                    <span class="message" id="success-message">User successfully created</span>
+                    <span class="message" id="error-message">Passwords don't match</span>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="/scripts/registration.js"></script>
+</body>
+</html>

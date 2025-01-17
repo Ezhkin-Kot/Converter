@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aboba Converter</title>
+
+    <link rel="stylesheet" href="/style/grid.css" />
+    <link rel="stylesheet" href="/style/style.css" />
+</head>
+<body>
+    <!--Sidebar-->
+    <div class="sidebar">
+        <a href="jpg-png.html">JPG to PNG</a>
+        <a href="#" class="active">PNG to JPG</a>
+        <div class="user">
+            <span id="avatar">U</span>
+            <span id="username">User</span>
+            <div class="dropdown-content">
+                <a href="plan.html">Change plan</a>
+                <a onclick="LogOut()">Log out</a>
+            </div>
+        </div>
+    </div>
+    <!--Sidebar-->
+    <div class="content">
+        <div class="converter-block">
+            <!--Upload files-->
+            <div class="box">
+                <form id="uploadForm">
+                    <label for="fileInput" id="upload">Upload PNG files:</label>
+                    <input type="file" id="fileInput" accept="image/png" multiple="multiple" />
+                </form>
+            </div>
+            <!--Upload files-->
+            <div class="center">
+                <button form="uploadForm" type="submit" class="convert">Convert</button>
+            </div>
+            <!--Download files-->
+            <div class="box">
+                <label for="downloadLinks" id="download">Your Images: </label>
+                <div id="downloadLinks"></div>
+            </div>
+            <!--Download files-->
+        </div>
+    </div>
+
+    <script src="/scripts/converter.js"></script>
+    <script>
+        const conversionType = "png-to-jpg";
+    </script>
+</body>
+</html>

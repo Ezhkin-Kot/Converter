@@ -1,0 +1,65 @@
+:root {
+    --free-color: #00e30f;
+    --prem-color: #8300e8;
+}
+.content>h1 {
+    margin: 5rem;
+    position: absolute;
+}
+
+.box {
+    height: 25rem;
+    width: 20rem;
+    margin: 15rem auto;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+
+    h1 {
+        transition: all 0.5s ease-in-out;
+        align-content: center;
+        text-align: center;
+        border: 1px black solid;
+        border-radius: 1rem;
+    }
+    h2 {
+        transition: all 0.5s ease-in-out;
+        font-size: xx-large;
+        align-content: center;
+        height: 3rem;
+        margin-top: 15rem;
+        text-align: center;
+        border: 1px black solid;
+        border-radius: 1rem;
+    }
+}
+
+.box:hover {
+    cursor: pointer;
+    scale: 110%;
+
+    #free-plan {
+        h1 {
+            color: var(--free-color);
+        }
+        h2 {
+            color: var(--free-color);
+        }
+    }
+
+    #prem-plan {
+        h1 {
+            color: var(--prem-color);
+        }
+        h2 {
+            color: var(--prem-color);
+        }
+    }
+}
+
+.box:active {
+    transition: all 0s;
+    scale: 100%;
+}

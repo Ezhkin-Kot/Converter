@@ -1,0 +1,41 @@
+:root {
+    --primary-color: #232323;
+    --font-color: #c0c0c0;
+    --sidebar: #202020;
+    --shadow: #101010;
+    --url-color: #808080;
+}
+
+body {
+    background-color: var(--primary-color);
+    color: var(--font-color);
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+a {
+    color: var(--url-color);
+    text-decoration: none;
+}
+
+.box {
+    border: 1px solid black;
+    box-shadow: 7px 10px 5px var(--shadow);
+    background-color: var(--sidebar);
+}
+
+.sidebar {
+    background-color: var(--sidebar);
+    a {
+        text-decoration: none;
+    }
+
+    a.active {
+        background-color: var(--shadow);
+    }
+
+    a:hover {
+        background-color: black;
+        color: white;
+        transition: 0.5s;
+    }
+}

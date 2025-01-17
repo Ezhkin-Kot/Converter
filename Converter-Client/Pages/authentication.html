@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication</title>
+
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/reg-auth-style.css" />
+</head>
+<body>
+    <section class="reg-auth" id="registration">
+        <div class="reg-auth-card">
+            <h1>Log in</h1>
+
+            <form name="auth-form" id="auth-form">
+                <input type="text" name="login" id="login" placeholder="Login" maxlength="40" minlength="3" required />
+                <input type="password" name="password" id="password" placeholder="Password" maxlength="40" minlength="8" required />
+
+                <button class="btn-send" type="submit">Log in</button>
+                <span>No account?</span>
+                <a href="registration.html">Register</a>
+                <div class="messages">
+                    <span class="message" id="success-message">Log in successful</span>
+                    <span class="message" id="error-message">Invalid login or password</span>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script src="/scripts/authentication.js"></script>
+</body>
+</html>

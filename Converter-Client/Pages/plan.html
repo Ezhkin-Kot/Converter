@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chose your plan</title>
+
+    <link rel="stylesheet" href="/style/grid.css" />
+    <link rel="stylesheet" href="/style/style.css" />
+    <link rel="stylesheet" href="/style/plan.css" />
+</head>
+<body>
+    <!--Sidebar-->
+    <div class="sidebar">
+
+    </div>
+    <!--Sidebar-->
+    <div class="content">
+        <h1>Choose your plan:</h1>
+        <div class="box" onclick="SetFreePlan()">
+            <div id="free-plan">
+                <h1>Standard</h1>
+                <p>No more than 5 conversions per day</p>
+                <h2>Free</h2>
+            </div>
+        </div>
+        <div class="box" onclick="SetPremPlan()">
+            <div id="prem-plan">
+                <h1>Premium</h1>
+                <p>Unlimited conversions count</p>
+                <h2>300$</h2>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/plan.js"></script>
+</body>
+</html>

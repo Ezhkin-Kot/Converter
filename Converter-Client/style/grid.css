@@ -1,0 +1,155 @@
+:root {
+    --bg-color: #212121;
+    --message-color: #ff0004;
+    --input-color: #2a2a2a;
+    --button: #171717;
+    --border-color2: #303030;
+}
+
+@media screen and (orientation: landscape) {
+    div.content { margin-left: 20vw;}
+}
+
+@media screen and (orientation: portrait) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+body {
+    font-size: 2vh;
+    margin: 0;
+}
+
+.content {
+    height: 100%;
+    display: flex;
+    position: relative;
+}
+
+.converter-block {
+    margin: auto;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.box {
+    border-radius: 30px;
+    display: inline-block;
+    position: relative;
+    height: 25rem;
+    width: 25rem;
+    padding: 1rem;
+    margin: 10rem 5rem;
+
+    label {
+        font-size: xx-large;
+        padding: 1%;
+        display: block;
+    }
+}
+
+.center {
+    display: inline-block;
+    position: relative;
+    margin: auto;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+
+    button {
+        transition: all 0.2s ease-in-out;
+    }
+
+    button:hover {
+        background-color: var(--button);
+    }
+}
+
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 20vw;
+    height: 100%;
+    position: fixed;
+    overflow: auto;
+
+    .user {
+        display: flex;
+        position: absolute;
+        margin: 2rem;
+        bottom: 0;
+        font-size: x-large;
+
+        #avatar {
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            display: inline-grid;
+            height: 3rem;
+            width: 3rem;
+            border-radius: 50%;
+            background-color: var(--message-color);
+        }
+
+        #username {
+            justify-content: center;
+            align-items: center;
+            display: inline-grid;
+            height: 3rem;
+            margin-left: 1rem;
+            position: relative;
+        }
+    }
+}
+
+.sidebar a {
+    display: block;
+    padding: 1vw;
+    font-size: 3vh;
+}
+
+.convert {
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    padding: 1vw;
+    border: 1px solid var(--shadow);
+    background-color: var(--shadow);
+    border-radius: 50px;
+    color: var(--font-color);
+    font-size: 2vh;
+    text-decoration: none;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    bottom: 3rem;
+    padding-bottom: 1rem;
+    width: 100%;
+    opacity: 0.9;
+    z-index: 1;
+    border-radius: 1rem;
+}
+
+.dropdown-content a {
+    padding: 1rem;
+    border: 1px solid var(--border-color2);
+    background-color: var(--shadow);
+    border-radius: 1rem;
+    font-size: medium;
+    color: var(--font-color);
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--input-color);
+    color: var(--shadow);
+}
+
+.user:hover .dropdown-content {
+    display: block;
+}
