@@ -25,8 +25,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
     build:
-      context: Converter-Server/ConverterAPI
-      dockerfile: ./Converter-Server/ConverterAPI/Dockerfile
+      context: ./Converter-Server
+      dockerfile: ./Converter-Server/Dockerfile
     ports:
       - "8080:8080"
     container_name: converter_api
