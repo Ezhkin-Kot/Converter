@@ -1,6 +1,6 @@
 const url = window.location.hostname === 'localhost'
     ? 'http://localhost:8080'
-    : 'http://api:8080';
+    : '/api';
 
 document.getElementById('reg-form').addEventListener('submit', async function (event) {
     event.preventDefault();

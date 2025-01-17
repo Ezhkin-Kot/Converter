@@ -1,6 +1,6 @@
 const url = window.location.hostname === 'localhost'
     ? 'http://localhost:8080/users/prem'
-    : 'http://api:8080/users/prem';
+    : '/api/users/prem';
 const user = JSON.parse(sessionStorage.getItem("user"));
 
 async function SetFreePlan() {

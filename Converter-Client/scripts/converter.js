@@ -1,6 +1,6 @@
 const url = window.location.hostname === 'localhost'
     ? 'http://localhost:8080/sessions'
-    : 'http://api:8080/sessions';
+    : '/api/sessions';
 const user = JSON.parse(sessionStorage.getItem("user"));
 
 document.getElementById('avatar').innerText = user.login.charAt(0);
