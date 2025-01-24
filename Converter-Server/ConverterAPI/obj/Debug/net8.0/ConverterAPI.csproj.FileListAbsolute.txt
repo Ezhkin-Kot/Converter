@@ -1,0 +1,8 @@
+/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/obj/Debug/net8.0/ConverterAPI.csproj.AssemblyReference.cache
+/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/obj/Debug/net8.0/ConverterAPI.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/obj/Debug/net8.0/ConverterAPI.AssemblyInfoInputs.cache
+/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/obj/Debug/net8.0/ConverterAPI.AssemblyInfo.cs
+/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/obj/Debug/net8.0/ConverterAPI.csproj.CoreCompileInputs.cache
+/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/obj/Debug/net8.0/ConverterAPI.MvcApplicationPartsAssemblyInfo.cs
+/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/obj/Debug/net8.0/ConverterAPI.MvcApplicationPartsAssemblyInfo.cache
+/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/obj/Debug/net8.0/ConverterAPI.sourcelink.json

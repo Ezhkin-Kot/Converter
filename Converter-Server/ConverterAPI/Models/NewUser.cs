@@ -1,4 +1,4 @@
-namespace ConverterAPI.DB.User;
+namespace ConverterAPI.Models;
 
 public record NewUser
 {

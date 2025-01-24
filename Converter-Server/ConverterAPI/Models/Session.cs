@@ -1,4 +1,4 @@
-namespace ConverterAPI.DB.Session;
+namespace ConverterAPI.Models;
 
 public record Session()
 {

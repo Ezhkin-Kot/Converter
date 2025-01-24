@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/BlGlQ1Vp1Y=",
+  "dgSpecHash": "EdWrFI3duwg=",
   "success": true,
-  "projectFilePath": "/Users/ezhkinkot/Projects/WEB/Converter/Converter-Server/ConverterAPI/ConverterAPI.csproj",
+  "projectFilePath": "/Users/ezhkinkot/Projects/WEB/Converter-Server/ConverterAPI/ConverterAPI.csproj",
   "expectedPackageFiles": [
     "/Users/ezhkinkot/.nuget/packages/microsoft.aspnetcore.openapi/8.0.8/microsoft.aspnetcore.openapi.8.0.8.nupkg.sha512",
     "/Users/ezhkinkot/.nuget/packages/microsoft.entityframeworkcore/9.0.0/microsoft.entityframeworkcore.9.0.0.nupkg.sha512",
