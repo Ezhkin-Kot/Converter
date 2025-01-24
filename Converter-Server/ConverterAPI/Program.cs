@@ -11,12 +11,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddCors(options =>
 {
-    // Change when real using!
-    options.AddPolicy(name: "AllowAll", policy =>
+    options.AddPolicy(name: "AllowSpecificOrigins", policy =>
     {
-        policy.AllowAnyOrigin()
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        policy.WithOrigins(
+            "http://localhost",
+            "https://localhost:80",
+            "http://client"
+            )
+            .AllowAnyMethod()
+            .AllowAnyHeader();
     });
 });
 
@@ -38,5 +41,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseCors("AllowAll"); // Change when real using!
+app.UseCors("AllowSpecificOrigins");
 app.Run();
