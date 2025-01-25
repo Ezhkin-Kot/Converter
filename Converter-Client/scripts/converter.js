@@ -80,19 +80,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(`Failed to read file: ${file.name}`);
             };
 
-            let json;
             try {
-                fetch(`${url}/upd/${user.id}`, {
+                const response = fetch(`${url}/upd/${user.id}`, {
                     method: 'PUT',
-                }).then((response) => response.json()).then((data) => {
-                    console.log(data);
+                });
 
-                    if (data.value.amount > 0) {
-                        reader.readAsDataURL(file);
-                    } else {
-                        alert('The number of free conversions has expired');
-                    }
-                })
+                if (response.ok) {
+                    const json = response.json();
+                    console.log(json);
+
+                    reader.readAsDataURL(file);
+                } else if (response.status === 403) {
+                    const errorJson = response.json();
+                    console.error('Forbidden:', errorJson.message);
+                    alert('The number of free conversions has expired');
+                } else if (response.status === 404) {
+                    const errorJson = response.json();
+                    console.error(errorJson.message);
+                } else if (response.status === 400) {
+                    const errorJson = response.json();
+                    console.error('Bad request:', errorJson.message);
+                } else {
+                    console.error('Unexpected response:', response.status, response.json());
+                }
             }
             catch (error) {
                 console.log(error);
@@ -106,10 +116,12 @@ async function LogOut() {
         const response = await fetch(`${url}/close/${user.id}`, {
             method: 'PUT',
         });
-        json = await response.json();
+        const json = await response.json();
         console.log(json);
 
-        window.location.href = 'authentication.html';
+        if (response.ok) {
+            window.location.href = 'authentication.html';
+        }
     }
     catch (error) {
         console.log(error);
