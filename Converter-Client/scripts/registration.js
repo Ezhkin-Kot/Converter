@@ -35,7 +35,7 @@ document.getElementById('reg-form').addEventListener('submit', async function (e
             });
 
             if (response.ok) { // Status-code checking
-                json = await response.json();
+                const json = await response.json();
                 console.log(json);
 
                 try {
@@ -53,9 +53,9 @@ document.getElementById('reg-form').addEventListener('submit', async function (e
 
                         // Saving user data
                         sessionStorage.setItem("user", JSON.stringify({
-                            id: json.value.user.id,
-                            login: json.value.user.login,
-                            premium: json.value.user.premium,
+                            id: loginJson.user.id,
+                            login: loginJson.user.login,
+                            premium: loginJson.user.premium,
                         }));
                         console.log(sessionStorage.getItem("user"));
 
