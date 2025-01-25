@@ -17,10 +17,8 @@ document.getElementById('reg-form').addEventListener('submit', async function (e
     if (pass !== passConfirm) {
         errorMessage.style.opacity = '1';
         setTimeout(() => {
-                errorMessage.style.opacity = '0';
-            },
-            2000
-        );
+            errorMessage.style.opacity = '0';
+            }, 2000);
     } else {
         data = {
             login: login,
@@ -35,10 +33,11 @@ document.getElementById('reg-form').addEventListener('submit', async function (e
                 },
                 body: JSON.stringify(data),
             });
-            json = await response.json();
-            console.log(json);
 
-            if (json.value.success) {
+            if (response.ok) { // Status-code checking
+                json = await response.json();
+                console.log(json);
+
                 try {
                     const loginResponse = await fetch(`${url}/sessions/auth`, {
                         method: 'POST',
@@ -47,38 +46,42 @@ document.getElementById('reg-form').addEventListener('submit', async function (e
                         },
                         body: JSON.stringify(data),
                     });
-                    json = await loginResponse.json();
-                    console.log(json);
-                }
-                catch (error) {
-                    console.log(error);
-                }
 
-                sessionStorage.setItem("user", JSON.stringify({
-                    id: json.value.user.id,
-                    login: json.value.user.login,
-                    premium: json.value.user.premium,
-                }));
-                console.log(sessionStorage.getItem("user"));
-                successMessage.style.color = 'green';
-                successMessage.style.opacity = '1';
-                setTimeout(() => {
-                        window.location.href = 'plan.html';
-                    },
-                    1000
-                );
-            }
-            if (json.value.message === 'User already exists') {
+                    if (loginResponse.ok) {
+                        const loginJson = await loginResponse.json();
+                        console.log(loginJson);
+
+                        sessionStorage.setItem("user", JSON.stringify({
+                            id: json.value.user.id,
+                            login: json.value.user.login,
+                            premium: json.value.user.premium,
+                        }));
+                        console.log(sessionStorage.getItem("user"));
+
+                        successMessage.style.color = 'green';
+                        successMessage.style.opacity = '1';
+                        setTimeout(() => {
+                            window.location.href = 'plan.html';
+                            }, 1000);
+                    } else {
+                        console.error('Login failed:', await loginResponse.json());
+                    }
+                } catch (error) {
+                    console.error('Login request error:', error);
+                }
+            } else if (response.status === 409) {
                 existsMessage.style.opacity = '1';
                 setTimeout(() => {
-                        existsMessage.style.opacity = '0';
-                    },
-                    2000
-                );
+                    existsMessage.style.opacity = '0';
+                    }, 2000);
+            } else if (response.status === 400) {
+                const errorJson = await response.json();
+                console.error('Bad request:', errorJson.message);
+            } else {
+                console.error('Unexpected response:', response.status, await response.json());
             }
-        }
-        catch (error) {
-            console.log(error);
+        } catch (error) {
+            console.error('Register request error:', error);
         }
     }
 });
