@@ -51,6 +51,7 @@ document.getElementById('reg-form').addEventListener('submit', async function (e
                         const loginJson = await loginResponse.json();
                         console.log(loginJson);
 
+                        // Saving user data
                         sessionStorage.setItem("user", JSON.stringify({
                             id: json.value.user.id,
                             login: json.value.user.login,
@@ -70,6 +71,9 @@ document.getElementById('reg-form').addEventListener('submit', async function (e
                     console.error('Login request error:', error);
                 }
             } else if (response.status === 409) {
+                const errorJson = await response.json();
+                console.error('User already exists:', errorJson.message);
+
                 existsMessage.style.opacity = '1';
                 setTimeout(() => {
                     existsMessage.style.opacity = '0';
