@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const response = fetch(`${url}/upd/${user.id}`, {
-                    method: 'PUT',
+                    method: 'PATCH',
                 });
 
                 if (response.ok) {
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function LogOut() {
     try {
         const response = await fetch(`${url}/close/${user.id}`, {
-            method: 'PUT',
+            method: 'PATCH',
         });
         const json = await response.json();
         console.log(json);

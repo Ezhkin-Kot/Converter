@@ -11,7 +11,7 @@ async function SetFreePlan() {
 
     try {
         const response = await fetch(`${url}/${user.id}/${false}`, {
-            method: 'PUT',
+            method: 'PATCH',
         });
         const json = await response.json();
         console.log(json.message);
@@ -32,7 +32,7 @@ async function SetPremPlan() {
 
     try {
         const response = await fetch(`${url}/${user.id}/${true}`, {
-            method: 'PUT',
+            method: 'PATCH',
         });
         const json = await response.json();
         console.log(json.message);
