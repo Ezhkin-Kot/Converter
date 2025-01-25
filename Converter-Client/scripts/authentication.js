@@ -31,9 +31,9 @@ document.getElementById('auth-form').addEventListener('submit', async function (
 
             // Saving user data
             sessionStorage.setItem("user", JSON.stringify({
-                id: json.value.user.id,
-                login: json.value.user.login,
-                premium: json.value.user.premium,
+                id: json.user.id,
+                login: json.user.login,
+                premium: json.user.premium,
             }));
             console.log(sessionStorage.getItem("user"));
 
