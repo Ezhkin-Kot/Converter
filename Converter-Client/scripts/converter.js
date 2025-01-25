@@ -6,7 +6,7 @@ const user = JSON.parse(sessionStorage.getItem("user"));
 document.getElementById('avatar').innerText = user.login.charAt(0);
 document.getElementById('username').innerText = user.login;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('uploadForm');
     const fileInput = document.getElementById('fileInput');
     const downloadLinksContainer = document.getElementById('downloadLinks');
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Handle form submission
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const files = fileInput.files;
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear previous download links
         downloadLinksContainer.innerHTML = '';
 
-        Array.from(files).forEach((file) => {
+        for (const file of files) {
             // Validate file type based on conversion type
             if (
                 (conversionType === 'jpg-to-png' && !file.type.startsWith('image/jpeg')) ||
@@ -81,24 +81,24 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             try {
-                const response = fetch(`${url}/upd/${user.id}`, {
+                const response = await fetch(`${url}/upd/${user.id}`, {
                     method: 'PATCH',
                 });
 
                 if (response.ok) {
-                    const json = response.json();
+                    const json = await response.json();
                     console.log(json);
 
                     reader.readAsDataURL(file);
                 } else if (response.status === 403) {
-                    const errorJson = response.json();
+                    const errorJson = await response.json();
                     console.error('Forbidden:', errorJson.message);
                     alert('The number of free conversions has expired');
                 } else if (response.status === 404) {
-                    const errorJson = response.json();
+                    const errorJson = await response.json();
                     console.error(errorJson.message);
                 } else if (response.status === 400) {
-                    const errorJson = response.json();
+                    const errorJson = await response.json();
                     console.error('Bad request:', errorJson.message);
                 } else {
                     console.error('Unexpected response:', response.status, response.json());
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
             catch (error) {
                 console.log(error);
             }
-        });
+        }
     });
 });
 
