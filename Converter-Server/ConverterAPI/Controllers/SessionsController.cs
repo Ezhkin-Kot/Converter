@@ -47,7 +47,7 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
 
         if (user == null || !PasswordManager.VerifyPassword(newUser.password, user.password, user.salt))
         {
-            return new JsonResult(new { success = false, error = "Invalid login or password" });
+            return Unauthorized(new { message = "Invalid login or password" });
         }
         
         var session = await context.Sessions.OrderBy(s => s.sessionid)
