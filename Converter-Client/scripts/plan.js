@@ -8,16 +8,15 @@ async function SetFreePlan() {
     boxes.forEach((box) => {box.style.opacity = '0';});
 
     console.log(user);
-    let json;
 
     try {
         const response = await fetch(`${url}/${user.id}/${false}`, {
             method: 'PUT',
         });
-        json = await response.json();
-        console.log(json);
+        const json = await response.json();
+        console.log(json.message);
 
-        if (json.value.success) {
+        if (response.ok) {
             window.location.href = 'jpg-png.html';
         }
     } catch (error) {
@@ -30,16 +29,15 @@ async function SetPremPlan() {
     boxes.forEach((box) => {box.style.opacity = '0';});
 
     console.log(user);
-    let json;
 
     try {
         const response = await fetch(`${url}/${user.id}/${true}`, {
             method: 'PUT',
         });
-        json = await response.json();
-        console.log(json);
+        const json = await response.json();
+        console.log(json.message);
 
-        if (json.value.success) {
+        if (response.ok) {
             window.location.href = 'jpg-png.html';
         }
     } catch (error) {
