@@ -53,9 +53,16 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
         var session = await context.Sessions.OrderBy(s => s.sessionid)
             .LastOrDefaultAsync(s => s.userid == user.id);
         
+        var publicUser = new PublicUser
+        {
+            id = user.id,
+            login = user.login,
+            premium = user.premium
+        };
+        
         if (session is { active: true })
         {
-            return Ok(new { session, message = "Connected to existing session" });
+            return Ok(new { session, user = publicUser, message = "Connected to existing session" });
         }
         
         session = new Session
@@ -69,7 +76,7 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
         await context.Sessions.AddAsync(session);
         await context.SaveChangesAsync();
 
-        return Ok(new { session, message = "New session started" });
+        return Ok(new { session, user = publicUser, message = "New session started" });
     }
     
     [HttpPatch("upd/{userid:int}")]
