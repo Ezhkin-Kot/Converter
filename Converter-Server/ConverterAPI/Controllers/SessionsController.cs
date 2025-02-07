@@ -1,4 +1,5 @@
 using ConverterAPI.Models;
+using ConverterAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,12 +7,12 @@ namespace ConverterAPI.Controllers;
 
 [ApiController]
 [Route("sessions")]
-public class SessionsController(ApplicationDbContext context) : ControllerBase
+public class SessionsController(ApplicationDbContext postgresDbContext, SessionService redisSessionService) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetSessions()
     {
-        var sessions = await context.Sessions.ToListAsync();
+        var sessions = await redisSessionService.GetSessionsAsync();
 
         if (sessions.Count == 0)
         {
@@ -24,8 +25,7 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
     [HttpGet("{userid:int}")]
     public async Task<IActionResult> GetSessionByUserId(int userid)
     {
-        var session = await context.Sessions.OrderBy(s => s.sessionid)
-            .LastOrDefaultAsync(s => s.userid == userid);
+        var session = await redisSessionService.GetSessionByUserIdAsync(userid);
         
         if (session == null)
         {
@@ -43,15 +43,14 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
             return BadRequest(new { message = "Invalid request" });
         }
         
-        var user = await context.Users.FirstOrDefaultAsync(u => u.login == newUser.login);
+        var user = await postgresDbContext.Users.FirstOrDefaultAsync(u => u.login == newUser.login);
 
         if (user == null || !PasswordManager.VerifyPassword(newUser.password, user.password, user.salt))
         {
             return Unauthorized(new { message = "Invalid login or password" });
         }
         
-        var session = await context.Sessions.OrderBy(s => s.sessionid)
-            .LastOrDefaultAsync(s => s.userid == user.id);
+        var session = await redisSessionService.GetSessionByUserIdAsync(user.id);
         
         var publicUser = new PublicUser
         {
@@ -60,8 +59,9 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
             premium = user.premium
         };
         
-        if (session is { active: true })
+        if (session != null)
         {
+            await redisSessionService.UpdateSessionAsync(user.id, s => s.active = true);
             return Ok(new { session, user = publicUser, message = "Connected to existing session" });
         }
         
@@ -73,8 +73,7 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
             active = true
         };
 
-        await context.Sessions.AddAsync(session);
-        await context.SaveChangesAsync();
+        await redisSessionService.CreateSessionAsync(session);
 
         return Ok(new { session, user = publicUser, message = "New session started" });
     }
@@ -82,9 +81,8 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
     [HttpPatch("upd/{userid:int}")]
     public async Task<IActionResult> UpdAmount(int userid)
     {
-        var user = await context.Users.FirstOrDefaultAsync(u => u.id == userid);
-        var session = await context.Sessions.OrderBy(s => s.sessionid)
-            .LastOrDefaultAsync(s => s.userid == userid);
+        var user = await postgresDbContext.Users.FirstOrDefaultAsync(u => u.id == userid);
+        var session = await redisSessionService.GetSessionByUserIdAsync(userid);
 
         if (user == null)
         {
@@ -102,6 +100,7 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
         if (user.premium)
         {
             session.amount = 5;
+            await redisSessionService.UpdateSessionAsync(user.id, s => s.amount = 5);
             return Ok(new { session.amount, message = "Amount unlimited." });
         }
         
@@ -110,9 +109,8 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
             return StatusCode(403, new { message = "Amount expired." });
         }
 
+        await redisSessionService.UpdateSessionAsync(user.id, s => s.amount--);
         session.amount--;
-        context.Sessions.Update(session);
-        await context.SaveChangesAsync();
 
         return Ok(new { session.amount, message = "Amount updated" });
     }
@@ -120,8 +118,7 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
     [HttpPatch("close/{userid:int}")]
     public async Task<IActionResult> CloseSession(int userid)
     {
-        var session = await context.Sessions.OrderBy(s => s.sessionid)
-            .LastOrDefaultAsync(s => s.userid == userid);
+        var session = await redisSessionService.GetSessionByUserIdAsync(userid);
 
         if (session == null)
         {
@@ -132,9 +129,7 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
             return BadRequest(new { message = "Session is already closed." });
         }
         
-        session.active = false;
-        context.Sessions.Update(session);
-        await context.SaveChangesAsync();
+        await redisSessionService.UpdateSessionAsync(userid, s => s.active = false);
 
         return Ok(new { message = "Session closed." });
     }
@@ -142,15 +137,14 @@ public class SessionsController(ApplicationDbContext context) : ControllerBase
     [HttpDelete("{userid:int}")]
     public async Task<IActionResult> DeleteSession(int userid)
     {
-        var session = await context.Sessions.FirstOrDefaultAsync(s => s.userid == userid);
+        var session = await redisSessionService.GetSessionByUserIdAsync(userid);
         
         if (session == null)
         {
             return NotFound(new { message = "No session found." });
         }
 
-        context.Sessions.Remove(session);
-        await context.SaveChangesAsync();
+        await redisSessionService.DeleteSessionAsync(userid);
 
         return Ok(new { message = "Session successfully deleted." });
     }

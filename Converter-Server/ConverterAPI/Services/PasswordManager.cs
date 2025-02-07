@@ -1,7 +1,7 @@
-namespace ConverterAPI;
-
 using System.Security.Cryptography;
 using System.Text;
+
+namespace ConverterAPI.Services;
 
 public static class PasswordManager
 {

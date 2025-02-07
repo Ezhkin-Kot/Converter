@@ -1,6 +1,4 @@
-namespace ConverterAPI;
-
-using Microsoft.Extensions.Configuration;
+namespace ConverterAPI.Services;
 
 public static class ConfigurationHelper
 {
@@ -25,3 +23,10 @@ public static class ConfigurationHelper
         return connectionString;
     }
 }
+
+/*
+Эти 4 строки посвящаются победителю легендарной постоянной рубрики
+"Рандомная загадка от Бредихина", Ëкарному Бабаю, успешно ответившему
+на все поставленные вопросы! Насколько правильными были его ответы мне похрен,
+по вашему я правда их проверял и знаю, какой там ответ?
+*/

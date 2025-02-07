@@ -1,13 +1,18 @@
-using ConverterAPI.Models;
+using ConverterAPI.Services;
+using StackExchange.Redis;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-// Connection to DB
+// Connection to DBs
+var postgresConnectionString = builder.Configuration.GetConnectionString("Postgres");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(postgresConnectionString));
+
+var redisConnectionString = builder.Configuration.GetConnectionString("Redis");
+builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConnectionString));
+
+builder.Services.AddSingleton<SessionService>();
 
 builder.Services.AddCors(options =>
 {
@@ -36,6 +41,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+// Sessions expiry listener for restoring active sessions
+using (var scope = app.Services.CreateScope())
+{
+    var sessionService = scope.ServiceProvider.GetRequiredService<SessionService>();
+    
+    await Task.Run(() => sessionService.WatchSessionExpiry());
 }
 
 app.UseHttpsRedirection();

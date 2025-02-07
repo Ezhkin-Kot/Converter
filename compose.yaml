@@ -24,6 +24,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
+      - REDIS_CONNECTION=rediska:6379
     build:
       context: ./Converter-Server/ConverterAPI
     ports:
@@ -31,6 +32,7 @@ services:
     container_name: converter_api
     depends_on:
       - aboba_db
+      - rediska
     networks:
       - dev
 
@@ -48,5 +50,17 @@ services:
     container_name: aboba_db
     networks:
       - dev
+
+  rediska:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --notify-keyspace-events Ex
+    volumes:
+      - rediska_data:/data
+    container_name: rediska
+    networks:
+      - dev
 volumes:
   aboba_data:
+  rediska_data:
