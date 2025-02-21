@@ -97,6 +97,7 @@ public class SessionService(IConnectionMultiplexer redis)
         await _db.KeyDeleteAsync(sessionActiveKey);
     }
     
+    // Restoring expired active sessions
     public async Task WatchSessionExpiry()
     {
         var subscriber = redis.GetSubscriber();

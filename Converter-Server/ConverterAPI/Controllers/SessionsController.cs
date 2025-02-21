@@ -38,14 +38,21 @@ public class SessionsController(ApplicationDbContext postgresDbContext, SessionS
     [HttpPost("auth")]
     public async Task<IActionResult> AuthUser([FromBody] NewUser? newUser)
     {
-        if (newUser == null)
+        if (newUser?.login == null || newUser.password == null)
         {
             return BadRequest(new { message = "Invalid request" });
         }
         
         var user = await postgresDbContext.Users.FirstOrDefaultAsync(u => u.login == newUser.login);
 
-        if (user == null || !PasswordManager.VerifyPassword(newUser.password, user.password, user.salt))
+        if (user == null)
+        {
+            // Fake password verification for security
+            PasswordManager.VerifyPassword(newUser.password, newUser.login, "s+abobaAboBA9+0wUpvS0g==");
+            return Unauthorized(new { message = "Invalid login or password" });
+        }
+
+        if (!PasswordManager.VerifyPassword(newUser.password, user.password, user.salt))
         {
             return Unauthorized(new { message = "Invalid login or password" });
         }

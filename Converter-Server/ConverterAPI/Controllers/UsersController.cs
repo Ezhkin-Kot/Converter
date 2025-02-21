@@ -77,27 +77,33 @@ public class UsersController(ApplicationDbContext context) : ControllerBase
         return CreatedAtAction(nameof(GetUserById), new { createdUser.id }, 
             new { message = $"User {createdUser.login} successfully created." });
     }
-
+    
     [HttpPatch]
-    public async Task<IActionResult> UpdateUser([FromBody] User? updatedUser)
+    public async Task<IActionResult> UpdateUser([FromBody] UpdatedUser? updatedUser)
     {
-        if (updatedUser == null)
+        if (updatedUser?.currentLogin == null || updatedUser.currentPassword == null)
         {
             return BadRequest(new { message = "Invalid request." });
         }
         
-        var user = await context.Users.FirstOrDefaultAsync(u => u.id == updatedUser.id);
+        var user = await context.Users.FirstOrDefaultAsync(u => u.login == updatedUser.currentLogin);
 
         if (user == null)
         {
-            return NotFound(new { message = "User not found." });
+            // Fake password verification for security
+            PasswordManager.VerifyPassword(updatedUser.currentPassword, updatedUser.currentLogin, "s+abobaAboBA9+0wUpvS0g==");
+            return Unauthorized(new { message = "Invalid login or password." });
+        }
+        if (!PasswordManager.VerifyPassword(updatedUser.currentPassword, user.password, user.salt))
+        {
+            return Unauthorized(new { message = "Invalid login or password." });
         }
         
-        user.login = updatedUser.login ?? user.login;
-        (user.password, user.salt) = (updatedUser.password != null) ? 
-            PasswordManager.HashPassword(updatedUser.password) : (user.password, user.salt);
+        user.login = updatedUser.newLogin ?? user.login;
+        (user.password, user.salt) = (updatedUser.newPassword != null) ? 
+            PasswordManager.HashPassword(updatedUser.newPassword) : (user.password, user.salt);
         user.premium = updatedUser.premium;
-
+        
         context.Users.Update(user);
         await context.SaveChangesAsync();
 

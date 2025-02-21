@@ -16,15 +16,12 @@ builder.Services.AddSingleton<SessionService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "AllowSpecificOrigins", policy =>
+    // Change when real using!
+    options.AddPolicy(name: "AllowAll", policy =>
     {
-        policy.WithOrigins(
-            "http://localhost",
-            "https://localhost:80",
-            "http://client"
-            )
-            .AllowAnyMethod()
-            .AllowAnyHeader();
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
@@ -54,5 +51,5 @@ using (var scope = app.Services.CreateScope())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseCors("AllowSpecificOrigins");
+app.UseCors("AllowAll"); // Change when real using!
 app.Run();
