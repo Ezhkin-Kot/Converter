@@ -2,3 +2,5 @@
 .vscode
 .idea
 *.db
+./Converter-Server/ConverterAPI/bin
+./Converter-Server/ConverterAPI/obj
